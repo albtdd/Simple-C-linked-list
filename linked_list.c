@@ -1,51 +1,67 @@
+/*
+ * linked_list.c
+ *
+ * Alberto Todde
+ *
+ */
+
 #include "linked_list.h"
 #include <stdlib.h>         // malloc, ...
 #include <string.h>         // strncpy, ...
 #include <stdio.h>          // printf, ...
 
 
-
-
 /*
- * Node of the list.
- * Information, in this example, is a struct with only a simple string.
- */
-struct t_node {
-    t_type m_info;  // Information of the node.
-
-    Node *m_next;   // Next node.
-};
-
-
-/*
- * List access
+ * List access.
  */
 struct t_llist {
-    LList *m_head;
+    Node *m_head;
     t_long m_size;
 };
 
 
-void ll_init(LList *list) {
-    list->m_head = 0;
-    list->m_size = 0;
-}
-
-
-Node* ll_new_node(const t_type info) {
-    Node *node = malloc(sizeof(Node));
-    if (node) {
-        node->m_info = info;
-        node->m_next = 0;
-        return node;
+/*
+ *
+ */
+LList* ll_new() {
+    LList *ll = malloc(sizeof(LList));
+    if (ll) {
+        ll->m_head = 0;
+        ll->m_size = 0;
+        return ll;
     }
     return 0;
 }
 
+
+/*
+ *
+ */
+t_long ll_free(LList *list) {
+    t_long counter = 0;
+    Node *ptr = list->m_head;
+    Node *prev;
+    while (ptr) {
+        prev = ptr;
+        ptr = ptr->m_next;
+        /* printf("Deleting: %s\n", (char*)prev->m_info); */
+        free(prev);
+        ++counter;
+    }
+    list->m_head = 0;
+    list->m_size -= counter;    // If everything goes well, must be zero.
+    return counter;
+}
+
+
+
+/*
+ *
+ */
 Node* ll_add_node(LList *list, Node *node){
     if (list && node) {
         // First element of the list
-        if (list->m_head = 0) {
+        if (list->m_head == 0) {
             list->m_head = node;
             node->m_next = 0;
             list->m_size = 1;
@@ -56,7 +72,26 @@ Node* ll_add_node(LList *list, Node *node){
         while (ptr->m_next != 0) {
             ptr = ptr->m_next;
         }
-        ptr->m_next = 0;
+        ptr->m_next = node;
         list->m_size++;
+        return ptr;
     }
+    return 0;
 }
+
+
+/*
+ *
+ */
+t_long ll_print(LList *list) {
+    if (list == 0) return 0;
+    t_long counter = 0;
+    Node *ptr = list->m_head;
+    while(ptr) {
+        print_node(ptr);
+        ptr = ptr->m_next;
+        ++counter;
+    }
+    return counter;
+}
+

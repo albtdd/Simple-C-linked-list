@@ -1,4 +1,6 @@
 /* 
+ * linked_list.h
+ *
  * Simple Linked List (ll)
  *
  * Alberto Todde.
@@ -7,39 +9,32 @@
 
 #pragma once
 
+#include "node.h"
 #include <stdbool.h>
-
-/*
- * Definition of the information of the node.
- */
-typedef int t_type;
 
 
 /*
  * Long Long int new name.
  */
-typedef long long int t_long;   // Used fot the size of the list.
+typedef unsigned long long t_long;   // Used fot the size of the list.
 
 
 /*
- * Node structure, early declaration.
+ * Early declaration.
  */
-typedef struct t_node Node;
-
 typedef struct t_llist LList;
 
 
 /*
- * Init of the list
+ * Make a new  list.
  */
-void  ll_init(LList *list);
+LList* ll_new();
 
 
 /*
- * Makes a new node.
- * Returns the new node or NULL otherwise.
+ * Free list
  */
-Node* ll_new_node(const t_type info);
+t_long ll_free(LList *list);
 
 
 /*
@@ -58,16 +53,16 @@ long int ll_size(const LList *list);
 
 
 /*
- * Adds a node to the list.
+ * Adds a node to the bottom of the list.
  * Returns negative code on errors, positive otherwise.
  * -1 head == node: can't add itself.
  * -2 try to insert a null-node.
  *  1 list was empty, first node.
  *  2 list was not empty, node added.
  */
-int ll_add_node(LList *list, Node *node);
+Node* ll_add_node(LList *list, Node *node);
 
 /*
  * Show the list
  */
-int ll_show(Node *list);
+t_long ll_print(LList *list);
