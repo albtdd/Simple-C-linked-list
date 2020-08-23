@@ -49,7 +49,7 @@ bool ll_is_empty(const LList *list);
  * If the node is not the head, the resutl will be the size
  * from that node to the end of the list.
  */
-long int ll_size(const LList *list);
+t_long ll_size(const LList *list);
 
 
 /*
@@ -60,7 +60,14 @@ long int ll_size(const LList *list);
  *  1 list was empty, first node.
  *  2 list was not empty, node added.
  */
-Node* ll_add_node(LList *list, Node *node);
+Node* ll_add(LList *list, Node *node);
+
+/*
+ * Remove a node in a specific position of the list.
+ * Return the node, no memory free.
+ */
+Node* ll_remove_at(LList *list, t_long index);
+
 
 /*
  * Show the list
